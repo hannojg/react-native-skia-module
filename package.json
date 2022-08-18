@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "scripts": {
+    "clean-skia": "git submodule deinit -f -- externals/react-native-skia && yarn rimraf ./externals/react-native-skia && git submodule update --init",
+    "build-skia": "cd externals/react-native-skia && git submodule update --init --recursive && yarn bootstrap && yarn build-skia && yarn copy-skia-headers"
+  },
   "devDependencies": {
     "@types/node": "^18.7.6",
     "rimraf": "^3.0.2",
