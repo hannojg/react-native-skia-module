@@ -22,6 +22,7 @@ function getBlacklist() {
         __dirname,
         '../externals/react-native-skia/package',
       )}/node_modules/*`,
+      `${path.resolve(__dirname, '../module')}/node_modules/*`,
     ),
   ];
   return exclusionList(nodeModuleDirs);
@@ -44,5 +45,15 @@ module.exports = {
   watchFolders: [
     path.resolve('.'),
     path.resolve('../externals/react-native-skia/package'),
+    path.resolve('../module'),
   ],
+
+  transformer: {
+    getTransformOptions: async () => ({
+      transform: {
+        experimentalImportSupport: false,
+        inlineRequires: true,
+      },
+    }),
+  },
 };

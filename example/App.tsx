@@ -1,6 +1,6 @@
-import {Canvas, Rect} from '@shopify/react-native-skia';
 import React from 'react';
 import {SafeAreaView, StyleSheet} from 'react-native';
+import {Canvas, Rect} from '@shopify/react-native-skia';
 
 const App = () => {
   return (
