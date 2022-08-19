@@ -2,7 +2,6 @@ import React, {useEffect, useRef} from 'react';
 import {SafeAreaView, StyleSheet} from 'react-native';
 import {
   Skia,
-  Rect,
   SkiaView,
   useDrawCallback,
   useTiming,
