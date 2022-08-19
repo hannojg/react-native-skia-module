@@ -64,14 +64,13 @@ target_include_directories(
 
 # Import prebuilt SKIA libraries
 
-#set (SKIA_LIBS_PATH "/Users/hannogodecke/Documents/GitHub/react-native-skia-module0.1/example/android/app/build/intermediates/merged_native_libs/debug/out/lib/${ANDROID_ABI}")
 #TODO: make this:
-#   - relative
-#   - make skia stuff accessible
-#   - tweak gradle to build rnskia first (because otherwise the .so file won't be there)
+#   - [x] relative
+#   - [ ] make skia stuff accessible
+#   - [ ] tweak gradle to build rnskia first (because otherwise the .so file won't be there)
 set (RNSKIA_LIB "rnskia")
 add_library(rnskia SHARED IMPORTED)
-set_property(TARGET rnskia PROPERTY IMPORTED_LOCATION "/Users/hannogodecke/Documents/GitHub/react-native-skia-module0.1/example/android/app/build/intermediates/merged_native_libs/debug/out/lib/x86/libreactskia.so")
+set_property(TARGET rnskia PROPERTY IMPORTED_LOCATION "${NODE_MODULES_DIR}/@shopify/react-native-skia/android/build/intermediates/merged_native_libs/${BUILD_TYPE}/out/lib/${ANDROID_ABI}/libreactskia.so")
 
 find_library(
         LOG_LIB
