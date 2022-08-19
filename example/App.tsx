@@ -1,8 +1,10 @@
 import React from 'react';
 import {SafeAreaView, StyleSheet} from 'react-native';
 import {Canvas, Rect} from '@shopify/react-native-skia';
+import {multiply} from 'react-native-skia-module';
 
 const App = () => {
+  multiply(123, 13).then(console.log);
   return (
     <SafeAreaView style={styles.flex1}>
       <Canvas style={styles.flex1}>

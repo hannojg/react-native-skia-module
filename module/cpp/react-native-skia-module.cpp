@@ -1,9 +1,12 @@
 #include "react-native-skia-module.h"
-#include <SkPaint.h>
+#include <JsiSkColor.h>
+#include <RNSkLog.h>
 
 namespace example {
 	int multiply(float a, float b) {
-		auto paint = SkPaint();
+        auto color = new RNSkia::JsiSkColor();
+        RNSkia::RNSkLogger::logToConsole("Color: %p", color);
+
 		return a * b;
 	}
 }

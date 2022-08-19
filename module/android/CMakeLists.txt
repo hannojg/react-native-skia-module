@@ -35,6 +35,13 @@ target_include_directories(
         ${PACKAGE_NAME}
         PRIVATE
 
+        # React native / JSI / JNI
+        "${NODE_MODULES_DIR}/react-native/ReactCommon/callinvoker"
+        "${NODE_MODULES_DIR}/react-native/ReactCommon/jsi"
+        "${NODE_MODULES_DIR}/react-native/ReactCommon"
+        "${NODE_MODULES_DIR}/react-native/ReactCommon/react/nativemodule/core"
+        "${NODE_MODULES_DIR}/react-native/ReactAndroid/src/main/java/com/facebook/react/turbomodule/core/jni"
+
         ../cpp
         # include all rn-skia headers
         "${NODE_MODULES_DIR}/@shopify/react-native-skia/android/cpp/skia/include/config/"
@@ -56,16 +63,15 @@ target_include_directories(
 )
 
 # Import prebuilt SKIA libraries
-set (SKIA_LIBS_PATH "${NODE_MODULES_DIR}/@shopify/react-native-skia/libs/android/${ANDROID_ABI}")
-set (SKIA_LIB "skia")
-add_library(skia STATIC IMPORTED)
-set_property(TARGET skia PROPERTY IMPORTED_LOCATION "${SKIA_LIBS_PATH}/libskia.a")
-set (SKIA_SVG_LIB "svg")
-add_library(svg STATIC IMPORTED)
-set_property(TARGET svg PROPERTY IMPORTED_LOCATION "${SKIA_LIBS_PATH}/libsvg.a")
-set (SKIA_SKSHAPER_LIB "skshaper")
-add_library(skshaper STATIC IMPORTED)
-set_property(TARGET skshaper PROPERTY IMPORTED_LOCATION "${SKIA_LIBS_PATH}/libskshaper.a")
+
+#set (SKIA_LIBS_PATH "/Users/hannogodecke/Documents/GitHub/react-native-skia-module0.1/example/android/app/build/intermediates/merged_native_libs/debug/out/lib/${ANDROID_ABI}")
+#TODO: make this:
+#   - relative
+#   - make skia stuff accessible
+#   - tweak gradle to build rnskia first (because otherwise the .so file won't be there)
+set (RNSKIA_LIB "rnskia")
+add_library(rnskia SHARED IMPORTED)
+set_property(TARGET rnskia PROPERTY IMPORTED_LOCATION "/Users/hannogodecke/Documents/GitHub/react-native-skia-module0.1/example/android/app/build/intermediates/merged_native_libs/debug/out/lib/x86/libreactskia.so")
 
 find_library(
         LOG_LIB
@@ -122,9 +128,7 @@ target_link_libraries(
         ${REACT_LIB}
         ${JSI_LIB}
         ${TURBOMODULES_LIB}
-        ${SKIA_SVG_LIB}
-        ${SKIA_SKSHAPER_LIB}
-        ${SKIA_LIB}
+        ${RNSKIA_LIB}
         -ljnigraphics
         -lGLESv2
         -lEGL
