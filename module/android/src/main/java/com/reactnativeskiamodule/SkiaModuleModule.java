@@ -25,7 +25,7 @@ public class SkiaModuleModule extends ReactContextBaseJavaModule {
     static {
         try {
             // Used to load the 'native-lib' library on application startup.
-            System.loadLibrary("cpp");
+            System.loadLibrary("reactskiamodule");
         } catch (Exception ignored) {
         }
     }
