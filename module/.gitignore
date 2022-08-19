@@ -5,3 +5,4 @@ android/.cxx
 
 # skia haeders
 cpp/skia
+android/libs
