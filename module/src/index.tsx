@@ -24,7 +24,9 @@ if (typeof SkiaModule.install === "function") {
   throw new Error("Couldn't call SkiaModule.install! Fuck.");
 }
 
-type SkSkottie = {
+export type SkSkottie = {
+  duration: number;
+  fps: number;
   render: (canvas: SkCanvas, rect: SkRect) => void;
   seek: (progress: number) => void;
 }
