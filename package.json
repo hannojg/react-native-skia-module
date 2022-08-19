@@ -8,7 +8,7 @@
   "scripts": {
     "clean-rnskia": "git submodule deinit -f -- externals/react-native-skia && yarn rimraf ./externals/react-native-skia && git submodule update --init",
     "build-rnskia": "cd externals/react-native-skia && git submodule update --init --recursive && yarn bootstrap && yarn build-skia && yarn copy-skia-headers",
-    "copy-skia-module-headers": "yarn rimraf ./module/cpp/skia/modules/ && mkdir -p ./module/cpp/skia/modules/skottie/include && cp -a ./externals/react-native-skia/externals/skia/modules/skottie/include/. ./module/cpp/skia/modules/skottie/include",
+    "copy-skia-module-headers": "yarn rimraf ./module/cpp/skia/modules/ && mkdir -p ./module/cpp/skia/modules/skottie/include && mkdir -p ./module/cpp/skia/modules/skottie/src/text && cp -a ./externals/react-native-skia/externals/skia/modules/skottie/include/. ./module/cpp/skia/modules/skottie/include && cp ./externals/react-native-skia/externals/skia/modules/skottie/src/text/SkottieShaper.h ./module/cpp/skia/modules/skottie/src/text/SkottieShaper.h",
     "yarn-bootstrap": "yarn && yarn clean-rnskia && yarn build-rnskia"
   },
   "devDependencies": {
