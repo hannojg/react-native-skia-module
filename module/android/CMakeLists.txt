@@ -43,6 +43,8 @@ target_include_directories(
         "${NODE_MODULES_DIR}/react-native/ReactAndroid/src/main/java/com/facebook/react/turbomodule/core/jni"
 
         ../cpp
+        ../cpp/skia
+
         # include all rn-skia headers
         "${NODE_MODULES_DIR}/@shopify/react-native-skia/android/cpp/skia/include/config/"
         "${NODE_MODULES_DIR}/@shopify/react-native-skia/android/cpp/skia/include/core/"

@@ -8,9 +8,11 @@
   "scripts": {
     "clean-rnskia": "git submodule deinit -f -- externals/react-native-skia && yarn rimraf ./externals/react-native-skia && git submodule update --init",
     "build-rnskia": "cd externals/react-native-skia && git submodule update --init --recursive && yarn bootstrap && yarn build-skia && yarn copy-skia-headers",
+    "copy-skia-module-headers": "yarn rimraf ./module/cpp/skia/modules/ && mkdir -p ./module/cpp/skia/modules/skottie/include && cp -a ./externals/react-native-skia/externals/skia/modules/skottie/include/. ./module/cpp/skia/modules/skottie/include",
     "yarn-bootstrap": "yarn && yarn clean-rnskia && yarn build-rnskia"
   },
   "devDependencies": {
+    "@shopify/react-native-skia": "^0.1.142",
     "@types/node": "^18.7.6",
     "@types/react": "^18.0.17",
     "@types/react-native": "^0.69.5",
