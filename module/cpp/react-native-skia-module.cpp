@@ -34,7 +34,11 @@ namespace RNSkia {
         }
 
         JSI_HOST_FUNCTION(render) {
-            auto canvas = JsiSkCanvas::fromValue(runtime, arguments[0]);
+            auto canvas = arguments[0]
+                    .asObject(runtime)
+                    .asHostObject<JsiSkCanvas>(runtime)
+                    ->getCanvas();
+
             auto rect = JsiSkRect::fromValue(runtime, arguments[1]);
             if (canvas != nullptr && rect != nullptr)
                 getObject()->render(canvas, rect.get());
