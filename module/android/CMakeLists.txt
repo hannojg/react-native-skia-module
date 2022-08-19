@@ -12,7 +12,7 @@ file(GLOB LIBRN_DIR "${PREBUILT_DIR}/${ANDROID_ABI}")
 file(GLOB libfbjni_link_DIRS "${build_DIR}/fbjni*.aar/jni/${ANDROID_ABI}")
 file(GLOB libfbjni_include_DIRS "${build_DIR}/fbjni-*-headers.jar/")
 
-link_directories(../libs/android/${ANDROID_ABI}/)
+link_directories(./libs/${ANDROID_ABI}/)
 
 if(${REACT_NATIVE_VERSION} LESS 66)
     file(
@@ -62,6 +62,8 @@ target_include_directories(
         "${NODE_MODULES_DIR}/@shopify/react-native-skia/android/cpp/rnskia/"
         "${NODE_MODULES_DIR}/@shopify/react-native-skia/android/cpp/rnskia/values/"
         "${NODE_MODULES_DIR}/@shopify/react-native-skia/android/cpp/utils/"
+
+        ${libfbjni_include_DIRS}
 )
 
 # Import prebuilt SKIA libraries
@@ -73,11 +75,28 @@ target_include_directories(
 set (RNSKIA_LIB "rnskia")
 add_library(rnskia SHARED IMPORTED)
 set_property(TARGET rnskia PROPERTY IMPORTED_LOCATION "${NODE_MODULES_DIR}/@shopify/react-native-skia/android/build/intermediates/merged_native_libs/${BUILD_TYPE}/out/lib/${ANDROID_ABI}/libreactskia.so")
-# UNCOMMENT TO ENABLE SKIA CODE
-#set (SKIA_LIBS_PATH "${NODE_MODULES_DIR}/@shopify/react-native-skia/libs/android/${ANDROID_ABI}")
-#set (SKIA_LIB "skia")
-#add_library(skia STATIC IMPORTED)
-#set_property(TARGET skia PROPERTY IMPORTED_LOCATION "${SKIA_LIBS_PATH}/libskia.a")
+
+# TODO: can we pull that out from the shared lib?
+# prebuild libs from the @shopify/react-native-skia repo
+set (SKIA_LIBS_PATH "${NODE_MODULES_DIR}/@shopify/react-native-skia/libs/android/${ANDROID_ABI}")
+set (SKIA_MODULE_LIBS_PATH "${CMAKE_CURRENT_SOURCE_DIR}/libs/${ANDROID_ABI}")
+
+set (SKIA_LIB "skia")
+set (SKIA_SKSHAPER_LIB "skshaper")
+set (SKIA_MODULE_SKSG_LIB "sksg")
+set (SKIA_MODULE_SKOTTIE_LIB "skottie")
+
+add_library(skia STATIC IMPORTED)
+set_property(TARGET skia PROPERTY IMPORTED_LOCATION "${SKIA_LIBS_PATH}/libskia.a")
+
+add_library(skshaper STATIC IMPORTED)
+set_property(TARGET skshaper PROPERTY IMPORTED_LOCATION "${SKIA_MODULE_LIBS_PATH}/libskshaper.a")
+
+add_library(sksg STATIC IMPORTED)
+set_property(TARGET sksg PROPERTY IMPORTED_LOCATION "${SKIA_MODULE_LIBS_PATH}/libsksg.a")
+
+add_library(skottie STATIC IMPORTED)
+set_property(TARGET skottie PROPERTY IMPORTED_LOCATION "${SKIA_MODULE_LIBS_PATH}/libskottie.a")
 
 find_library(
         LOG_LIB
@@ -134,8 +153,11 @@ target_link_libraries(
         ${REACT_LIB}
         ${JSI_LIB}
         ${TURBOMODULES_LIB}
+        ${SKIA_MODULE_SKOTTIE_LIB}
+        ${SKIA_SKSHAPER_LIB}
+        ${SKIA_MODULE_SKSG_LIB}
+        ${SKIA_LIB}
         ${RNSKIA_LIB}
-#        ${SKIA_LIB}
         -ljnigraphics
         -lGLESv2
         -lEGL
