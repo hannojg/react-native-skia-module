@@ -1,8 +1,16 @@
 #include <jni.h>
 #include "react-native-skia-module.h"
 
-extern "C" JNIEXPORT jint JNICALL
-Java_com_reactnativeskiamodule_SkiaModuleModule_nativeMultiply(JNIEnv *env, jclass type, jint a, jint b)
-{
-    return a * b; //example::multiply(a, b);
+#include <JniPlatformContext.h>
+
+
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_reactnativeskiamodule_SkiaModuleModule_initialize(JNIEnv *env,
+                                                           jclass clazz,
+                                                           jlong jsi_ptr,
+                                                           jobject context) {
+    RNSkia::RNSkModuleManager::installBindings(
+            reinterpret_cast<facebook::jsi::Runtime *>(jsi_ptr),
+            nullptr);
 }

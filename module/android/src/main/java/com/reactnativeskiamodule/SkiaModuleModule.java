@@ -1,9 +1,11 @@
 package com.reactnativeskiamodule;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
-import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
+import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.module.annotations.ReactModule;
@@ -22,20 +24,24 @@ public class SkiaModuleModule extends ReactContextBaseJavaModule {
         return NAME;
     }
 
-    static {
+    @ReactMethod(isBlockingSynchronousMethod = true)
+    public boolean install() {
         try {
-            // Used to load the 'native-lib' library on application startup.
             System.loadLibrary("reactskiamodule");
-        } catch (Exception ignored) {
+            ReactApplicationContext context = getReactApplicationContext();
+
+            initialize(
+                    context.getJavaScriptContextHolder().get(),
+                    // TODO: yeah, here we'd need to map to PlatformContext, which only exists in RNSkia java code
+                    context
+            );
+
+            return true;
+        } catch (Exception exception) {
+            Log.e(NAME, "Failed to initialize Skia Manager!", exception);
+            return false;
         }
     }
 
-    // Example method
-    // See https://reactnative.dev/docs/native-modules-android
-    @ReactMethod
-    public void multiply(int a, int b, Promise promise) {
-        promise.resolve(nativeMultiply(a, b));
-    }
-
-    public static native int nativeMultiply(int a, int b);
+    public static native void initialize(long jsiPtr, ReactContext context);
 }
