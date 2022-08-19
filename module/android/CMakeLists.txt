@@ -71,6 +71,11 @@ target_include_directories(
 set (RNSKIA_LIB "rnskia")
 add_library(rnskia SHARED IMPORTED)
 set_property(TARGET rnskia PROPERTY IMPORTED_LOCATION "${NODE_MODULES_DIR}/@shopify/react-native-skia/android/build/intermediates/merged_native_libs/${BUILD_TYPE}/out/lib/${ANDROID_ABI}/libreactskia.so")
+# UNCOMMENT TO ENABLE SKIA CODE
+#set (SKIA_LIBS_PATH "${NODE_MODULES_DIR}/@shopify/react-native-skia/libs/android/${ANDROID_ABI}")
+#set (SKIA_LIB "skia")
+#add_library(skia STATIC IMPORTED)
+#set_property(TARGET skia PROPERTY IMPORTED_LOCATION "${SKIA_LIBS_PATH}/libskia.a")
 
 find_library(
         LOG_LIB
@@ -128,6 +133,7 @@ target_link_libraries(
         ${JSI_LIB}
         ${TURBOMODULES_LIB}
         ${RNSKIA_LIB}
+#        ${SKIA_LIB}
         -ljnigraphics
         -lGLESv2
         -lEGL
